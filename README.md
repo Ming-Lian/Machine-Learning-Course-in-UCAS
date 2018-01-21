@@ -1,7 +1,7 @@
 # Machine-Learning-Course-in-UCAS
 国科大机器学习课程
 
-模式识别与机器学习
+<h1 align="center">模式识别与机器学习</h1>
 
 <p align="right">主讲教师：黄庆明等</p>
 
