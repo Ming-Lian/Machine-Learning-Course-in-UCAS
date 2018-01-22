@@ -85,6 +85,8 @@
 
 ---
 
+教学视频： https://www.bilibili.com/video/av16300399/?from=search&seid=13027293187083221511
+
 - **第六章 统计学习理论基础**
 
 6.1 统计判别准则
@@ -120,6 +122,8 @@
 <h3 align="center">郭嘉丰老师部分</h3>
 
 ---
+
+教学视频： https://www.bilibili.com/video/av18258418/?from=search&seid=13027293187083221511
 
 - **第九章 无监督学习与半监督学习**
 
