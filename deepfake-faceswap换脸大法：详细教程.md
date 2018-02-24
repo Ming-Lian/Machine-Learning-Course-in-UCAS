@@ -6,7 +6,7 @@
 	- [运行环境搭建](#install-env)
 	- [获取faceswap代码](#get-code)
 	- [启动virtualenv](#setup-virtualenv)
-	- [设置你的project](#setup-project)
+	- [配置你的project](#setup-project)
 
 
 
@@ -79,7 +79,7 @@ setprojectdir .
 > - 如果要退出virtualenv，输入`deactivate`
 > - 如果要重新激活virtualenv，输入`workon faceswap`
 
-<h4 name="setup-project">设置你的project</h4>
+<h4 name="setup-project">配置你的project</h4>
 
 当你已经激活virtualenv后，从requirement files安装依赖程序。requirement file位于faceswap repo中
 
