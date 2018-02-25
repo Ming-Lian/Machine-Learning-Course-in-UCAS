@@ -239,11 +239,23 @@ $ mkdir gcc-build-4.8.2；cd gcc-build-4.8.2
 ## --enable-languages 表示你要让你的gcc支持那些语言
 ## --disable-multilib 不生成编译为其他平台可执行代码的交叉编译器
 ## --disable-checking 生成的编译器在编译过程中不做额外检查
-$ ../configure --enable-checking=release --enable-languages=c,c++ --disable-multilib
+## --prefix 指定安装目录，如果不指定安装目录则或默认安装在/usr/local，不是管理员没有该目录的写权限会导致安装失败
+$ ../configure --prefix=$HOME/software/gcc-4.8.2/bin --enable-checking=release --enable-languages=c,c++ --disable-multilib
 
 # 开始编译，这一步比较耗时
 $ make
+
+# 安装
+$ make install
 ```
+
+检验是否安装成功
+
+```
+gcc -v
+```
+
+如果显示的gcc版本仍是以前的版本，就需要重启系统；或者可以查看gcc的安装位置：which gcc；
 
 
 
