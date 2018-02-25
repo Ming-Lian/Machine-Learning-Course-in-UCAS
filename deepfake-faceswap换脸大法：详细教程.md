@@ -165,7 +165,7 @@ pip install -r requirements-python36.txt
 
 悲剧了，安装dependencies出了一些问题，由于使用了requirements-python36.txt进行批量化安装，我们不清楚到底哪一步出了问题，所以我们采取手动安装，按照requirements-python36.txt中的顺序，一个一个安装
 
-<h4 name="install-tensorflow">手动安装dependencies</h4>
+<h4 name="install-dependencies">手动安装dependencies</h4>
 
 
 ```
@@ -185,7 +185,12 @@ tqdm
 
 按顺序执行`pip install *`进行安装，前几个都很顺利，直到遇到 **dlib** 时报错了：**Permission denied: 'cmake'** —— 没有cmake的执行权限，如果你是管理员那么你可以切换到管理员身份进行安装，如果不是的话，自己安装一个cmake。
 
-
+```
+# 用conda安装cmake
+$ $anaconda3/conda install cmake
+# 将cmake安装目录添加到环境变量
+$ export PATH=$HOME/software/anaconda3/binL$PATH
+```
 
 requirements安装好了以后，你可以尝试运行faceswap
 
