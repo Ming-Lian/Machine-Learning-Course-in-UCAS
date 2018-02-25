@@ -1,20 +1,20 @@
 <a name="content">目录</a>
 
 [deepfake-faceswap换脸大法：详细教程](#title)
-- [内在算法思想](#infixed-algorithm)
-- [准备](#prerequisites)
-	- [硬件要求](#hardware)
-	- [运行环境搭建](#install-env)
-	- [获取faceswap代码](#get-code)
-		- [安装git](#install-git)
-		- [git clone](#git-clone)
-	- [启动virtualenv](#setup-virtualenv)
-	- [设置你的project](#setup-project)
-		- [批量安装dependencies](#install-dependencies-one-step)
-		- [手动安装dependencies](#install-dependencies-step-by-step)
-			- [解决dlib安装失败问题](#deal-with-dlib)
+- [1. 内在算法思想](#infixed-algorithm)
+- [2. 准备](#prerequisites)
+	- [2.1. 硬件要求](#hardware)
+	- [2.2. 运行环境搭建](#install-env)
+	- [2.3. 获取faceswap代码](#get-code)
+		- [2.3.1. 安装git](#install-git)
+		- [2.3.2. git clone](#git-clone)
+	- [2.4. 启动virtualenv](#setup-virtualenv)
+	- [2.5. 设置你的project](#setup-project)
+		- [2.5.1. 批量安装dependencies](#install-dependencies-one-step)
+		- [2.5.2. 手动安装dependencies](#install-dependencies-step-by-step)
+			- [2.5.2.1 解决dlib安装失败问题](#deal-with-dlib)
 		
-- [Workflow](#workflow)
+- [3. Workflow](#workflow)
 
 
 
@@ -22,7 +22,7 @@
 
 <p align="center"><img src=/picture/Faceswap-exampleSwap.jpg width="800"></p>
 
-<a name="infixed-algorithm"><h3>内在算法思想 [<sup>目录</sup>](#content)</h3></a>
+<a name="infixed-algorithm"><h3>1. 内在算法思想 [<sup>目录</sup>](#content)</h3></a>
 
 ---
 
@@ -43,11 +43,11 @@
 
 想详细了解 **dlib** 请点 [这里](https://pypi.python.org/pypi/dlib)
 
-<a name="prerequisites"><h3>准备 [<sup>目录</sup>](#content)</h3></a>
+<a name="prerequisites"><h3>2. 准备 [<sup>目录</sup>](#content)</h3></a>
 
 ---
 
-<h4 name="hardware">硬件要求</h4>
+<h4 name="hardware">2.1. 硬件要求</h4>
 
 你至少要满足一下条件之一：
 - A powerful CPU
@@ -55,7 +55,7 @@
 > 目前仅支持 Nvidia GPUs ，无法支持农企（AMD），这是由该工具的底层依赖的TensorFlow决定的，开发人员表示也很无奈(｡í _ ì｡)
 > 仅仅是 Nvidia GPUs 还不够，它还得至少能支持 CUDA Compute Capability 3.0 或者更高，言外之意：**这是有钱人的游戏，没钱就滚吧**
 
-<h4 name="install-env">运行环境搭建</h4>
+<h4 name="install-env">2.2. 运行环境搭建</h4>
 
 **Python >= 3.2**
 
@@ -89,11 +89,11 @@ pip install virtualenvwrapper-win
 $ $anaconda3/pip install virtualenv
 ```
 
-<h4 name="get-code">获取 faceswap 代码</h4>
+<h4 name="get-code">2.3. 获取 faceswap 代码</h4>
 
 推荐用git将代码仓库克隆到本地
 
-<a name="install-git"><strong>安装git</strong></a>
+<a name="install-git"><strong>2.3.1. 安装git</strong></a>
 
 首先你得安装git到你的电脑上
 > - **Windows**
@@ -108,7 +108,7 @@ $ $anaconda3/pip install virtualenv
 > # yum install git
 > ```
 
-<a name="git-clone"><strong>git clone</strong></a>
+<a name="git-clone"><strong>2.3.2. git clone</strong></a>
 
 打开git Bash（或git CMD)
 
@@ -125,7 +125,7 @@ $ cd DeepLearing_practice/
 $ git clone https://github.com/deepfakes/faceswap.git
 ```
 
-<h4 name="setup-virtualenv">启动virtualenv</h4>
+<h4 name="setup-virtualenv">2.4. 启动virtualenv</h4>
 
 - **Windows**
 
@@ -156,9 +156,9 @@ virtualenv faceswap_env/
 > - 如果要重新激活virtualenv，输入`source faceswap_env/bin/activate`
 
 
-<h4 name="setup-project">设置你的project</h4>
+<h4 name="setup-project">2.5. 设置你的project</h4>
 
-<h4 name="install-dependencies-one-step">批量安装dependencies</h4>
+<h4 name="install-dependencies-one-step">2.5.1. 批量安装dependencies</h4>
 
 当你已经激活virtualenv后，从requirement files安装依赖程序。requirement file位于faceswap repo中
 
@@ -173,7 +173,7 @@ pip install -r requirements-python36.txt
 
 悲剧了，安装dependencies出了一些问题，由于使用了requirements-python36.txt进行批量化安装，我们不清楚到底哪一步出了问题，所以我们采取手动安装，按照requirements-python36.txt中的顺序，一个一个安装
 
-<h4 name="install-dependencies">手动安装dependencies</h4>
+<h4 name="install-dependencies">2.5.2. 手动安装dependencies</h4>
 
 
 ```
@@ -190,7 +190,7 @@ dlib
 face_recognition
 tqdm
 ```
-<h4 name="deal-with-dlib">解决dlib安装失败问题</h4>
+<h4 name="deal-with-dlib">2.5.2.1. 解决dlib安装失败问题</h4>
 
 按顺序执行`pip install *`进行安装，前几个都很顺利，直到遇到 **dlib** 时报错了：**Permission denied: 'cmake'** —— 没有cmake的执行权限，如果你是管理员那么你可以切换到管理员身份进行安装，如果不是的话，自己安装一个cmake。
 
@@ -254,7 +254,7 @@ requirements安装好了以后，你可以尝试运行faceswap
 python faceswap.py -h
 ```
 
-<a name="workflow"><h3>Workflow [<sup>目录</sup>](#content)</h3></a>
+<a name="workflow"><h3>3. Workflow [<sup>目录</sup>](#content)</h3></a>
 
 
 参考资料：
