@@ -37,7 +37,7 @@
 
 想详细了解 **face_recognition** 请点 [这里](http://pythonhosted.org/face_recognition/index.html)
 
-想详细了解 **dlib** 请点 [这里](http://pythonhosted.org/face_recognition/index.html)
+想详细了解 **dlib** 请点 [这里](https://pypi.python.org/pypi/dlib)
 
 <a name="prerequisites"><h3>准备 [<sup>目录</sup>](#content)</h3></a>
 
