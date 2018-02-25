@@ -9,7 +9,7 @@
 		- [2.3.1. 安装git](#install-git)
 		- [2.3.2. git clone](#git-clone)
 	- [2.4. 启动virtualenv](#setup-virtualenv)
-	- [2.5. 设置你的project](#setup-project)
+	- [2.5. 配置你的project](#setup-project)
 		- [2.5.1. 批量安装dependencies](#install-dependencies-one-step)
 		- [2.5.2. 手动安装dependencies](#install-dependencies-step-by-step)
 			- [2.5.2.1 解决dlib安装失败问题](#deal-with-dlib)
@@ -156,7 +156,7 @@ virtualenv faceswap_env/
 > - 如果要重新激活virtualenv，输入`source faceswap_env/bin/activate`
 
 
-<h4 name="setup-project">2.5. 设置你的project</h4>
+<h4 name="setup-project">2.5. 配置你的project</h4>
 
 <h4 name="install-dependencies-one-step">2.5.1. 批量安装dependencies</h4>
 
