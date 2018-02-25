@@ -10,7 +10,9 @@
 		- [git clone](#git-clone)
 	- [启动virtualenv](#setup-virtualenv)
 	- [设置你的project](#setup-project)
-		- [手动安装dependencies](#install-dependencies)
+		- [批量安装dependencies](#install-dependencies-one-step)
+		- [手动安装dependencies](#install-dependencies-step-by-step)
+			- [解决dlib安装失败问题](#deal-with-dlib)
 		
 - [Workflow](#workflow)
 
@@ -21,6 +23,8 @@
 <p align="center"><img src=/picture/Faceswap-exampleSwap.jpg width="800"></p>
 
 <a name="infixed-algorithm"><h3>内在算法思想 [<sup>目录</sup>](#content)</h3></a>
+
+---
 
 - 用 faceswap 底层依赖的工具包 face_recognition 以及训练好的 face_recognition_model 进行面部识别，其实这就是一个已经训练好的用于面部识别的 CNN（卷积神经网络）。然后在面部标注出关键的面容与表情特征点。对于原脸与目标脸（要替换成的脸），分别执行该步骤。
 
@@ -40,6 +44,8 @@
 想详细了解 **dlib** 请点 [这里](https://pypi.python.org/pypi/dlib)
 
 <a name="prerequisites"><h3>准备 [<sup>目录</sup>](#content)</h3></a>
+
+---
 
 <h4 name="hardware">硬件要求</h4>
 
@@ -152,6 +158,8 @@ virtualenv faceswap_env/
 
 <h4 name="setup-project">设置你的project</h4>
 
+<h4 name="install-dependencies-one-step">批量安装dependencies</h4>
+
 当你已经激活virtualenv后，从requirement files安装依赖程序。requirement file位于faceswap repo中
 
 ![](/picture/Faceswap-requirementFiles.png)
@@ -182,6 +190,7 @@ dlib
 face_recognition
 tqdm
 ```
+<h4 name="deal-with-dlib">解决dlib安装失败问题</h4>
 
 按顺序执行`pip install *`进行安装，前几个都很顺利，直到遇到 **dlib** 时报错了：**Permission denied: 'cmake'** —— 没有cmake的执行权限，如果你是管理员那么你可以切换到管理员身份进行安装，如果不是的话，自己安装一个cmake。
 
@@ -190,7 +199,54 @@ tqdm
 $ $anaconda3/conda install cmake
 # 将cmake安装目录添加到环境变量
 $ export PATH=$HOME/software/anaconda3/binL$PATH
+
+# 测试cmake是否安装成功
+$ cmake -h
 ```
+
+安装好cmake后，继续尝试安装dlib
+
+```
+$ pip install dlib
+
+# 或者可以用源码安装
+$ python setup.py install 
+```
+
+可是还是报错，麻蛋，什么破玩意儿！
+
+```
+CMake Error at /share/disk5/lianm/basic_tool/dlib-19.9.0/dlib/external/pybind11/tools/pybind11Tools.cmake:32 (message):
+  Unsupported compiler -- pybind11 requires C++11 support!
+```
+
+错误信息显示编译需要**C++11**的支持，也就是说我们还得再安装一个C++11，那就来吧
+
+```
+# 获取GCC 4.8.2包
+$ wget -c -P basic_tool http://gcc.skazkaforyou.com/releases/gcc-4.8.2/gcc-4.8.2.tar.gz
+
+# 解压
+$ tar zxvf gcc-4.8.2.tar.gz
+
+# 进入到目录gcc-4.8.2，运行：./contrib/download_prerequisites。这个神奇的脚本文件会帮我们下载、配置、安装依赖库，可以节约我们大量的时间和精力。
+$ ./contrib/download_prerequisites
+
+# 建立输出目录并到目录里
+$ mkdir gcc-build-4.8.2；cd gcc-build-4.8.2
+
+# 设置好configure(配置)
+## --enable-languages 表示你要让你的gcc支持那些语言
+## --disable-multilib 不生成编译为其他平台可执行代码的交叉编译器
+## --disable-checking 生成的编译器在编译过程中不做额外检查
+$ ../configure --enable-checking=release --enable-languages=c,c++ --disable-multilib
+
+# 开始编译，这一步比较耗时
+$ make
+```
+
+
+
 
 requirements安装好了以后，你可以尝试运行faceswap
 
@@ -204,3 +260,5 @@ python faceswap.py -h
 参考资料：
 
 (1) [deepfakes/faceswap: Prerequisites](https://github.com/deepfakes/faceswap/blob/master/INSTALL.md)
+
+(2) [linux下安装或升级GCC4.8，以支持C++11标准](http://www.cnblogs.com/lizhenghn/p/3550996.html)
