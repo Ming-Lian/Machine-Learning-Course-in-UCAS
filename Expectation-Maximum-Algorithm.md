@@ -3,8 +3,11 @@
 [期望最大化算法（EM算法）](#title)
 - [1. EM算法的基本思想](#principle)
 - [2. EM算法的数学推导](#math-derivation)
-- [3. EM算法的实际应用情景](#applications)
-	- [3.1. HMM的参数估计：鲍姆-韦尔奇算法](#baulm-werch)
+- [3. EM算法的收敛性](#convergence)
+- [4. EM算法的实际应用情景](#applications)
+	- [4.1. HMM的参数估计：鲍姆-韦尔奇算法](#baulm-werch)
+	- [4.2. 高斯混合模型（GMM）](#gmm)
+	- [4.3. K-means算法](#k-means)
 
 
 
@@ -118,13 +121,49 @@ EM算法的直观理解的例子——**K-Means算法**：
 
 <p align="center"><img src=./picture/EM-Algorithm-math-derivation-14.png height=100 />
 
+<a name="convergence"><h2>3. EM算法的收敛性 [<sup>目录</sup>](#)</h2></a>
+
+要证明EM算法收敛，则我们需要证明我们的对数似然函数的值在迭代的过程中一直在增大。即：
+
+<p align="center"><img src=./picture/EM-Algorithm-convergence-1.png height=60 />
+
+由于
+
+<p align="center"><img src=./picture/EM-Algorithm-convergence-2.png height=60 />
+
+令：
+
+<p align="center"><img src=./picture/EM-Algorithm-convergence-3.png height=60 />
+
+上两式相减得到：
+
+<p align="center"><img src=./picture/EM-Algorithm-convergence-4.png height=300 />
+
+上面的公式的用到了Jensen不等式，之所以取等号是因为这里取的是使等式成立的情况
+
+在上式中分别取θ为θ <sup>j</sup> 和θ <sup>j+1</sup> ，并相减得到：
+
+<p align="center"><img src=./picture/EM-Algorithm-convergence-5.png height=70 />
+
+要证明EM算法的收敛性，我们只需要证明上式的右边是非负的即可。
+
+由于θj+1使得L(θ,θj)极大，因此有:
+
+<p align="center"><img src=./picture/EM-Algorithm-convergence-6.png height=50 />
+
+而对于第二部分，我们有：
+
+<p align="center"><img src=./picture/EM-Algorithm-convergence-7.png height=300 />
+
+其中第（4）式用到了Jensen不等式，只不过和第二节的使用相反而已，第（5）式用到了概率分布累积为1的性质。
+
+至此，我们证明了EM算法的收敛性
+
+<a name="applications"><h2>4. EM算法的实际应用情景 [<sup>目录</sup>](#)</h2></a>
 
 
-<a name="applications"><h2>3. EM算法的实际应用情景 [<sup>目录</sup>](#)</h2></a>
 
-
-
-<a name="baulm-werch"><h3>3.1. HMM的参数估计：鲍姆-韦尔奇算法 [<sup>目录</sup>](#)</h3></a>
+<a name="baulm-werch"><h3>4.1. HMM的参数估计：鲍姆-韦尔奇算法 [<sup>目录</sup>](#)</h3></a>
 
 
 
