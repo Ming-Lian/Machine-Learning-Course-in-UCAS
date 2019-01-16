@@ -24,7 +24,12 @@
 			- [5.1.3.1. 确定损失函数](#logistic-regression-cost-function)
 			- [5.1.3.2. 梯度下降求解](#logistic-regression-solve-fit-using-gradient-descent)
 			- [5.1.3.3. 高级优化算法简介与使用](#logistic-regression-advanced-optimal-algorithmn)
-
+	- [5.2. 多元分类](#multi-classification)
+- [6. 过拟合与正则化](#overfit-regularization)
+	- [6.1. 过拟合问题](#what-is-overfit)
+	- [6.2. 正则化](#what-is-regularization)
+	- [6.3. logistic回归的正则化](#regularization-for-logistic-regression)
+	- [6.4. 线性回归的正则化](#regularization-for-linear-regression)
 
 
 
@@ -119,6 +124,17 @@
 
 <a name="logistic-regression-advanced-optimal-algorithmn"><h4>5.1.3.3. 高级优化算法简介与使用 [<sup>目录</sup>](#content)</h4></a>
 
+<a name="multi-classification"><h3>5.2. 多元分类 [<sup>目录</sup>](#content)</h3></a>
 
+<a name="overfit-regularization"><h2>6. 过拟合与正则化 [<sup>目录</sup>](#content)</h2></a>
+
+<a name="what-is-overfit"><h3>6.1. 过拟合问题 [<sup>目录</sup>](#content)</h3></a>
+
+<a name="what-is-regularization"><h3>6.2. 正则化 [<sup>目录</sup>](#content)</h3></a>
+
+<a name="regularization-for-logistic-regression"><h3>6.3. logistic回归的正则化 [<sup>目录</sup>](#content)</h3></a>
+
+
+<a name="regularization-for-linear-regression"><h3>6.4. 线性回归的正则化 [<sup>目录</sup>](#content)</h3></a>
 
 
