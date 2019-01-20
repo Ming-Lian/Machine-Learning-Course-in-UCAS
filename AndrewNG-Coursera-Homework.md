@@ -94,6 +94,8 @@
 通过的输入数据文件为`ex2data1.txt`：
 
 ```
+# 为用逗号隔开的3列，分别为：exam1Score,exam2Score,lable
+
 34.62365962451697,78.0246928153624,0
 30.28671076822607,43.89499752400101,0
 35.84740876993872,72.90219802708364,0
@@ -126,24 +128,32 @@
 	plot(x(neg,1), x(neg,2),'ko','MarkerSize', 3);
 	xlab('Exam 1 score');
 	ylab('Exam 2 score');
+	legend('Admitted', 'Not admitted');
 	hold off;
 	```
 
 	<p align="center"><img src=./picture/AndrewNG-homework-ex2-1.png width=800 /></p>
 
-2. 定义sigmoid函数
+	要得到的目标函数为 sigmoid 函数：
 
 	<p align="center"><img src=./picture/AndrewNG-homework-ex2-2.png height=50 /></p>
 	
 	<p align="center"><img src=./picture/AndrewNG-homework-ex2-3.png height=70 /></p>
-	
+
+2. 计算Cost和gradient
+
 	```
-	function g = sigmoid(x)
-		g = 1./(1+exp(-x));
-	end
+	[m,n] = size(x);
+	X = [ones(m),data(:,:2)];
+	initialTheta = zeros(1,n+1);
+	% 计算初始的Cost和gradient
+	[initalCost,initialGradient] = costFunction(X,y,initialTheta);
+	% 打印出初始时的Cost和gradient
+	fprintf('Cost at initial theta(zeros): %f\n",initialCost);
+	fprintf('Gradient at initial theta(zeros): %f\n",initialGradient);
 	```
 
-3. 定义costFunction函数，返回cost和gradient
+	在计算初始的Cost (initalCost) 和 gradient (initialGradient) 时，调用了自定义的函数costFunction
 
 	损失函数为：
 
@@ -152,13 +162,89 @@
 	梯度的计算公式为：
 	
 	<p align="center"><img src=./picture/AndrewNG-homework-ex2-5.png height=70 /></p>
-	
+
+	下面给出costFunction函数的定义：
+
 	```
-	function [jVal, gradient] = costFunction(x,y,theta)
+	function [jVal,gradient] = costFunction(x,y,theta)
 		predict = sigmoid(x*theta);
 		leftCost = -y'*log(predict);
 		rightCost = -(1-y)'*log(1-predict);
 		jVal = (1/m)*(leftCost+rightCost);
 		gradient = (1/m)*((predict-y)'*x);
 	end
-	```	
+	```
+
+	在上面的costFunction函数中又调用了sigmoid函数，定义为：
+
+	```
+	function g = sigmoid(x)
+		g = 1./(1+exp(-x));
+	end
+	```
+
+3. 优化目标函数
+
+	使其目标函数的Cost最小化，即
+
+	<p align="center"><img src=./picture/AndrewNG-homework-ex2-6.png height=50 /></p>
+
+	可以像**练习一**那样使用传统的梯度下降方法进行参数的优化，但Octave内部自带了`fminunc`函数，可以用于非约束优化问题（unconstrained optimization problem）的求解
+
+	fminunc函数的用法为：
+
+	```
+	%% 设置fminunc函数的内部选项
+	options = optmset('GradObj', 'on', 'MaxIter', 400);
+	% 'GradObj', 'on' 设置梯度目标参数为打开状态，即需要给这个算法提供一个梯度
+	% 'MaxIter', 400 设置最大迭代次数
+	
+	%% 使用fminunc函数执行非约束优化
+	[optTheta, functionVal, exitFlag] = fminunc(@costFunction, initialTheta, options);
+	```
+
+	一般情况下costFunction函数和它的函数名一样，只计算Cost值，不过由于这里要用到fminunc这个非约束优化函数，该函数需要提供Cost和gradient，所以在前面costFunction函数时，增加了一个计算梯度值的功能
+	
+4. 画出决策分界面 (Decision Boundary)
+
+	先像前面的第一步那样，画出原始数据分布散点图
+
+	```
+	% 画图
+	%% 区分出两类样本
+	pos = find(y==1);
+	neg = find(y==0);
+	figure;
+	%% 画出pos类样本
+	plot(x(pos,1), x(pos,2),'k+','MarkerSize', 3);
+	%% 画出neg类样本
+	plot(x(neg,1), x(neg,2),'ko','MarkerSize', 3);
+	xlab('Exam 1 score');
+	ylab('Exam 2 score');
+	```
+
+	然后在散点图的基础上，把分界线画出来
+
+	分界线满足：
+
+	<p align="center"><img src=./picture/AndrewNG-homework-ex2-7.png height=40 /></p>
+
+	得到x1和x2直接的关系为：
+
+	<p align="center"><img src=./picture/AndrewNG-homework-ex2-8.png height=70 /></p>
+
+	```
+	hold on;
+	% 只需要选择两个点即可将直线画出
+	plot_x = [min(X(:,2))-2, max(X(:,2))+2];
+	plot_y = (-1./theta(3)).*(theta(2).*plot_x + theta(1));
+	plot(plot_x, plot_y)
+	legend('Admitted', 'Not admitted', 'Decision Boundary')
+	hold off;
+	```
+
+	<p align="center"><img src=./picture/AndrewNG-homework-ex2-9.png width= 800  /></p>
+
+
+
+
