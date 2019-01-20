@@ -30,7 +30,12 @@
 	- [6.2. 正则化](#what-is-regularization)
 	- [6.3. logistic回归的正则化](#regularization-for-logistic-regression)
 	- [6.4. 线性回归的正则化](#regularization-for-linear-regression)
-
+- [7. 非线性假设](#unlinear-hyposis)
+	- [7.1. 引入非线性假设的必要性](#necessary-for-unlinear-hyposis)
+	- [7.2. 神经网络](#neural-network)
+		- [7.2.1. 神经网络结构](#neural-network-structure)
+		- [7.2.2. 正向传播](#neural-network-forward-propagation)
+		- [7.2.3. 理解神经网络：如何计算复杂非线性假设](#neural-network-make-sense)
 
 
 
@@ -137,4 +142,14 @@
 
 <a name="regularization-for-linear-regression"><h3>6.4. 线性回归的正则化 [<sup>目录</sup>](#content)</h3></a>
 
+<a name="unlinear-hyposis"><h2>7. 非线性假设 [<sup>目录</sup>](#content)</h2></a>
 
+<a name="necessary-for-unlinear-hyposis"><h3>7.1. 引入非线性假设的必要性 [<sup>目录</sup>](#content)</h3></a>
+
+<a name="neural-network"><h3>7.2. 神经网络 [<sup>目录</sup>](#content)</h3></a>
+
+<a name="neural-network-structure"><h3>7.2.1. 神经网络结构 [<sup>目录</sup>](#content)</h3></a>
+
+<a name="neural-network-forward-propagation"><h3>7.2.2. 正向传播 [<sup>目录</sup>](#content)</h3></a>
+
+<a name="neural-network-make-sense"><h3>7.2.3. 理解神经网络：如何计算复杂非线性假设 [<sup>目录</sup>](#content)</h3></a>
