@@ -24,7 +24,9 @@
 
 	> 该样本的所有unique TCRβs中与阳性表型相关的克隆的数量所占的比例
 
-	然后分别对表型阳性和表型阴性两组样本，利用Beta分别（补充知识——[Beta分布](#beta-distribution)）估计出各组的表型负荷的概率密度分布，分别记作 Beta<sub>+</sub>(α<sub>+</sub> , β<sub>+</sub>) 和 Beta<sub>-</sub>(α<sub>-</sub> , β<sub>-</sub>)
+	由于表型负荷的取值范围为 (0, 1)，则其符合beta二项分布（简称beta分布，补充知识——[Beta分布](#beta-distribution)）
+
+	然后分别对表型阳性和表型阴性两组样本，利用Beta分别估计出各组的表型负荷的概率密度分布，分别记作 Beta<sub>+</sub>(α<sub>+</sub> , β<sub>+</sub>) 和 Beta<sub>-</sub>(α<sub>-</sub> , β<sub>-</sub>)
 
 	<p align="center"><img src=/picture/App-ML-in-Bioinfo-TCRbeta-classification-1.png height=100 />
 
