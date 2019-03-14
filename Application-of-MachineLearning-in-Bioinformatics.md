@@ -2,6 +2,8 @@
 
 [机器学习在生物信息中的应用](#title)
 - [1. 根据免疫组库TCRβ预测病人的CMV感染状态](#predict-cmv-serostatus-using-tcr)
+- [2. SC3：单细胞表达谱的无监督聚类](#unsupervise-clustering-for-single-cell-profile)
+- [3. GATK的VQSR](#gatk-vqsr)
 - [补充知识](#supplementary-knowledge)
 	- [*1. beta分布](#beta-distribution)
 		- [*1.1. 什么是beta分布](#what-is-beta-distribution)
@@ -14,7 +16,7 @@
 
 <h1 name="title">机器学习在生物信息中的应用</h1>
 
-<a name="predict-cmv-serostatus-using-tcr"><h2>根据免疫组库TCRβ预测病人的CMV感染状态 [<sup>目录</sup>](#content)</h2></a>
+<a name="predict-cmv-serostatus-using-tcr"><h2>1. 根据免疫组库TCRβ预测病人的CMV感染状态 [<sup>目录</sup>](#content)</h2></a>
 
 - 基于单特征的贝叶斯判别模型
 
@@ -36,12 +38,28 @@
 
 	若P ( c<sub>+</sub> | x <sub>i</sub> ) > P ( c <sub>-</sub> | x <sub>i</sub> )，则判断为阳性组，否则为阴性组
 
+<a name="predict-cmv-serostatus-using-tcr"><h2>2. SC3：单细胞表达谱的无监督聚类 [<sup>目录</sup>](#content)</h2></a>
 
+该聚类方法名为SC3（Single-Cell Consensus Clustering）
 
+该方法本质上就是K-means聚类，不过在执行K-means聚类的前后进行了一些特殊的操作：
 
+> - **k-means聚类前**：进行了数据预处理，即特征的构造，称为特征工程，该方法中是对输入的原始特征空间进行PCA变换或拉普拉斯矩阵变换，对变换后的新特征矩阵逐渐增加提取的主成分数，来构造一系列新特征；
+> - **k-means聚类后**：特征工程构造出来的一系列新特征集合，基于这些新特征集合通过k-means聚类能得到一系列不同的聚类结果，尝试对这些聚类结果总结出consensus clustering
 
+<p align="center"><img src=/picture/T-cell-sequencing-in-cancers-colorectal-cancer-2.png width=800 /></p>
 
+本人比较好奇的地方是：**怎么从一系列不同的聚类结果中总结出consensus clustering？**
 
+> 使用CSPA算法（cluster-based similarity partitioning algorithm）
+> 
+> （1）对每一个聚类结果按照以下方法构造二值相似度矩阵S：如果两个样本i和j在该聚类结果中被聚到同一个集合中，则它们之间的相似度为1，在二值相似度矩阵中对应的值 S<sub>i,j</sub> = 1，否则S<sub>i,j</sub> = 0；
+> 
+> （2）对所有的聚类结果的二值相似度矩阵S取平均，得到consensus matrix；
+> 
+> （3）基于consensus matrix进行层次聚类，得到最终的consensus clustering；
+
+<a name="gatk-vqsr"><h2>2. GATK的VQSR [<sup>目录</sup>](#content)</h2></a>
 
 <a name="supplementary-knowledge"><h2>补充知识 [<sup>目录</sup>](#content)</h2></a>
 
@@ -112,3 +130,5 @@ s
 (2) [CSDN·chivalry《二项分布和Beta分布》](https://blog.csdn.net/sunmenggmail/article/details/17153053)
 
 (3) [CSDN·Jie Qiao《带你理解beta分布》](https://blog.csdn.net/a358463121/article/details/52562940)
+
+(4) Kiselev, V. Y. et al. SC3: consensus clustering of single-cell RNA-seq data[J]. Nat. Methods 14, 483–486 (2017).
