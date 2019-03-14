@@ -38,7 +38,7 @@
 
 	若P ( c<sub>+</sub> | x <sub>i</sub> ) > P ( c <sub>-</sub> | x <sub>i</sub> )，则判断为阳性组，否则为阴性组
 
-<a name="predict-cmv-serostatus-using-tcr"><h2>2. SC3：单细胞表达谱的无监督聚类 [<sup>目录</sup>](#content)</h2></a>
+<a name="unsupervise-clustering-for-single-cell-profile"><h2>2. SC3：单细胞表达谱的无监督聚类 [<sup>目录</sup>](#content)</h2></a>
 
 该聚类方法名为SC3（Single-Cell Consensus Clustering）
 
