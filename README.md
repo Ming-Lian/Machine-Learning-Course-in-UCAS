@@ -2,8 +2,8 @@
 
 - 国科大机器学习课程资源
 
-    - [课程大纲](./wiki/%E8%AF%BE%E7%A8%8B%E5%A4%A7%E7%BA%B2)
-    - [课程课件](./releases)
+    - [课程大纲](https://github.com/Ming-Lian/Machine-Learning-Course-in-UCAS/wiki/%E8%AF%BE%E7%A8%8B%E5%A4%A7%E7%BA%B2)
+    - [课程课件](https://github.com/Ming-Lian/Machine-Learning-Course-in-UCAS/releases)
     - 课程视频（B站）
     - [我的学习笔记](./%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E5%9B%BD%E7%A7%91%E5%A4%A7%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%AF%BE%E7%A8%8B.md)
 
