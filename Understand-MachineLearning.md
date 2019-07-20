@@ -8,7 +8,13 @@
         - [1.2.2. 两种求解策略](#2-type-solving-methods)
     - [1.3. EM算法的优化思想](#principle-of-em-algorithmn)
     - [1.4. 类比损失函数最小化与梯度下降法](#analogy-mle-em-with-minimize-loss-function-and-gradient-descent)
-
+- [2. 比较逻辑回归、感知机和支持向量机](#compare-logic-regression-perceptron-and-svm)
+    - [2.1. 问题描述](#2-task-description)
+    - [2.2. 感知机](#2-perceptron)
+    - [2.3. SVM](#2-svm)
+    - [2.4. 逻辑回归](#2-logistic-regression)
+    
+    
 <h1 mame="title">理解机器学习</h1>
 
 <a name="maximize-likelihood-estimation-and-expection-maximum"><h2>1. 理解极大似然估计和EM算法 [<sup>目录</sup>](#content)</h2></a>
@@ -338,6 +344,34 @@ $$
 
 
 <a name="analogy-mle-em-with-minimize-loss-function-and-gradient-descent"><h3>1.4. 类比损失函数最小化与梯度下降法 [<sup>目录</sup>](#content)</h3></a>
+
+<a name="compare-logic-regression-perceptron-and-svm"><h2>2. 比较逻辑回归、感知机和支持向量机 [<sup>目录</sup>](#content)</h2></a>
+
+<a name="2-task-description"><h3>2.1. 问题描述 [<sup>目录</sup>](#content)</h3></a>
+
+<p align="center"><img src=./picture/BIML-Club-4th-1_1.jpg width=800 /></p>
+
+<a name="2-perceptron"><h3>2.2. 感知机 [<sup>目录</sup>](#content)</h3></a>
+
+<p align="center"><img src=./picture/BIML-Club-4th-1_2.jpg width=800 /></p>
+
+<p align="center"><img src=./picture/BIML-Club-4th-2.jpg width=800 /></p>
+
+<a name="2-svm"><h3>2.3. SVM [<sup>目录</sup>](#content)</h3></a>
+
+<p align="center"><img src=./picture/BIML-Club-4th-5.jpg width=800 /></p>
+
+<p align="center"><img src=./picture/BIML-Club-4th-6.jpg width=800 /></p>
+
+<p align="center"><img src=./picture/BIML-Club-4th-7.jpg width=800 /></p>
+
+<p align="center"><img src=./picture/BIML-Club-4th-8.jpg width=800 /></p>
+
+<a name="2-logistic-regression"><h3>2.4. 逻辑回归 [<sup>目录</sup>](#content)</h3></a>
+
+<p align="center"><img src=./picture/BIML-Club-4th-3.jpg width=800 /></p>
+
+<p align="center"><img src=./picture/BIML-Club-4th-4.jpg width=800 /></p>
 
 ---
 
