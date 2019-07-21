@@ -13,6 +13,11 @@
     - [2.2. 感知机](#2-perceptron)
     - [2.3. SVM](#2-svm)
     - [2.4. 逻辑回归](#2-logistic-regression)
+- [补充知识](#supplimentary)
+    - [*1. 理解拉格朗日乘子法](#lagrange-multiplier)
+        - [*1.1. 引子](#lagrange-multiplier-1)
+        - [*1.2. 正式提出拉格朗日乘子法](#lagrange-multiplier-2)
+        - [*1.3. 多约束条件下的拉格朗日乘子法](#lagrange-multiplier-3)
     
     
 <h1 mame="title">理解机器学习</h1>
@@ -372,6 +377,34 @@ $$
 <p align="center"><img src=./picture/BIML-Club-4th-3.jpg width=800 /></p>
 
 <p align="center"><img src=./picture/BIML-Club-4th-4.jpg width=800 /></p>
+
+<a name="supplimentary"><h2>补充知识 [<sup>目录</sup>](#content)</h2></a>
+
+<a name="lagrange-multiplier"><h3>*1. 理解拉格朗日乘子法 [<sup>目录</sup>](#content)</h3></a>
+
+<a name="lagrange-multiplier-1"><h4>*1.1. 引子 [<sup>目录</sup>](#content)</h4></a>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-lagrange-multiplier-1.jpg width=800 /></p>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-lagrange-multiplier-2.jpg width=800 /></p>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-lagrange-multiplier-3.jpg width=800 /></p>
+
+<a name="lagrange-multiplier-2"><h4>*1.2. 正式提出拉格朗日乘子法 [<sup>目录</sup>](#content)</h4></a>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-lagrange-multiplier-4.jpg width=800 /></p>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-lagrange-multiplier-5_1.jpg width=800 /></p>
+
+<a name="lagrange-multiplier-3"><h4>*1.3. 多约束条件下的拉格朗日乘子法 [<sup>目录</sup>](#content)</h4></a>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-lagrange-multiplier-5_2.jpg width=800 /></p>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-lagrange-multiplier-6.jpg width=800 /></p>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-lagrange-multiplier-7.jpg width=800 /></p>
+
+
 
 ---
 
