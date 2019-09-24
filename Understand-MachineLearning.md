@@ -13,6 +13,24 @@
     - [2.2. 感知机](#2-perceptron)
     - [2.3. SVM](#2-svm)
     - [2.4. 逻辑回归](#2-logistic-regression)
+- [3. 从三硬币问题到改进的三硬币问题](#3-coin-problem)
+    - [3.1. 原始三硬币问题](#raw-3-coin-problem)
+    - [3.2. 改进的三硬币问题](#modified-3-coin-problem)
+        - [3.2.1. 提出问题](#modified-3-coin-problem-1)
+        - [3.2.2. 含有隐变量的情况](#modified-3-coin-problem-2)
+        - [3.2.3. 不含有隐变量的情况](#modified-3-coin-problem-3)
+        - [3.2.4. 对不含隐藏变量情况的优化目标的改进](#modified-3-coin-problem-4)
+- [4. 模型的评估方法](#methods-to-evaluate-model)
+    - [4.1. 什么叫一个“好”的模型: 泛化误差尽可能低](#what-a-good-model-is)
+    - [4.2. 如何得到泛化误差：用“测试误差”近似“泛化误差”](#how-to-get-general-error)
+        - [4.2.1. 留出法及其存在的问题](#hold-out-method)
+        - [4.2.2. 改进方案一：K折交叉验证及其特例——留一法](#k-fold-cross-validation)
+        - [4.2.3. 改进方案二：自助法（bootstrap）](#bootstrap)
+    - [4.3. 如何定量计算和评估泛化误差](#how-to-quantify-general-error)
+        - [4.3.1. 最简单的标准：正确率/错误率——正确率一定越高越好？](#correct-or-error-rate)
+        - [4.3.2. 更全面的标准：查全率、查准率和F1](#precise-recall-and-f1)
+        - [4.3.3. ROC与AUC](#roc-and-auc)
+        - [4.3.4. 比较ROC与P-R曲线](#compare-roc-and-p-r-curve)
 - [补充知识](#supplimentary)
     - [*1. 理解拉格朗日乘子法](#lagrange-multiplier)
         - [*1.1. 引子](#lagrange-multiplier-1)
@@ -377,6 +395,350 @@ $$
 <p align="center"><img src=./picture/BIML-Club-4th-3.jpg width=800 /></p>
 
 <p align="center"><img src=./picture/BIML-Club-4th-4.jpg width=800 /></p>
+
+<a name="3-coin-problem"><h2>3. 从三硬币问题到改进的三硬币问题 [<sup>目录</sup>](#content)</h2></a>
+
+<a name="raw-3-coin-problem"><h3>3.1. 原始三硬币问题 [<sup>目录</sup>](#content)</h3></a>
+
+> <p align="center"><img src=./picture/Understand-MachineLearning-coin-tose-problem-1.png width=600></p>
+>
+> 已知进行了10次这样的试验，得到：
+>
+> $$1 \quad 0 \quad 1 \quad 0 \quad 0 \quad 0 \quad 1 \quad 0 \quad 0 \quad 1$$
+>
+> 问题：根据这些试验结果，估计$\pi,p,q$
+
+对于一次扔硬币试验：
+
+$$
+\begin{aligned}
+&\quad P(y \mid \theta) \\
+&=\sum_z P(y,z \mid \theta) \\
+&=\sum_z P(z\mid \theta)P(y \mid z, \theta) \\
+&=P(z=B \mid \theta)P(y \mid z=B,\theta) + P(z=C \mid \theta)P(y \mid z=C,\theta) \\
+&=\pi p^y (1-p)^{1-y} + (1-\pi)q^y(1-q)^{1-y}
+\end{aligned}
+$$
+
+其中，$z \in \{正面，反面\}$
+
+对于n次试验得到的结果$Y=\{y_1, y_2, y_3, ..., y_n\}$，其出现的概率为：
+
+$$P(Y \mid \theta)=\sum_Z P(Y,Z \mid \theta)=\sum_Z P(Z \mid \theta)P(Y \mid Z,\theta)$$
+
+由于每一次试验都是相互独立的，所以
+
+$$P(Y \mid \theta)=\prod_{i=1}^n P(y_i \mid \theta)=\prod_{i=1}^n \left[ \pi p^{y_i} (1-p)^{1-y_i} + (1-\pi)q^{y_i}(1-q)^{1-y_i}\right]$$
+
+其对数形式为：
+
+$$L(\theta)=\log P(Y \mid \theta)=\sum_{i=1}^n \log \left[ \pi p^{y_i} (1-p)^{1-y_i} + (1-\pi)q^{y_i}(1-q)^{1-y_i}\right]$$
+
+由于$L(\theta)$对于$\theta=\{\pi, p,q\}$不可导，所以它没有解析解，需要通过其他方式来进行求解
+
+<a name="modified-3-coin-problem"><h3>3.2. 改进的三硬币问题 [<sup>目录</sup>](#content)</h3></a>
+
+<a name="modified-3-coin-problem-1"><h4>3.2.1. 提出问题 [<sup>目录</sup>](#content)</h4></a>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-coin-tose-problem-2.png width=600></p>
+
+即先投掷硬币A来决定，后面从B或者C两堆硬币中随机取一枚进行最后的投币试验
+
+> 其中B、C两堆硬币由一个造币厂按照两个不同的规格进行制造：B堆硬币正面朝上的概率$p$，C堆硬币正面朝上的概率$q$。但是由于该厂制造技术不过关，造出来的硬币并不能总是严格满足规格要求，B堆硬币正面朝上的概率服从$p' \sim Beta(\alpha_1,\beta_1), \quad E(p')=p$，C堆硬币正面朝上的概率服从$q' \sim Beta(\alpha_2,\beta_2), \quad E(q')=q$
+
+当从B或C堆中选出一枚硬币之后，进行n次投币试验，出现了k次正面朝上的结果
+
+> 注：每一轮试验为：投A硬币 $\to$ 选B或C堆 $\to$ 从选出的堆中挑一枚硬币  $\to$ 进行n次投币
+
+则对于第i轮试验得到的结果为$(k_i,n_i)$，即对挑出的硬币投币$n_i$次，出现$k_i$次正面朝上的结果
+
+给出m轮试验的结果Y：
+
+$$Y=\{(k_1,n_1), (k_2,n_2), ..., (k_m,n_m)\}$$
+
+问题：估计$\theta=\{\pi, \alpha_1, \beta_1, \alpha_2, \beta_2\}$
+
+<a name="modified-3-coin-problem-2"><h4>3.2.2. 含隐变量的情况 [<sup>目录</sup>](#content)</h4></a>
+
+即未知每一轮最后投币的硬币来源
+
+其中一轮试验中，n次投币出现k次正面朝上（记为$y=(k,n))$的概率为：
+
+$$
+\begin{aligned}
+&\quad P(y \mid \theta) \\
+&= \sum_z P(y,z \mid \theta) \\
+&= \sum_z P(z \mid \theta)P(y \mid z,\theta) \\
+&= P(z=B \mid \theta)P(y \mid z=B,\theta) + P(z=C \mid \theta)P(y \mid z=C,\theta)
+\end{aligned} \tag{1}
+$$
+
+其中，$z$表示A硬币的投币结果，或者选择的硬币堆，$P(y \mid z=B,\theta)$表示先通过投掷A硬币从而选中B堆硬币后，从中随机挑中一枚硬币进行投币试验，得到结果$y=(k,n)$的概率，则
+
+$$P(y \mid z=B, \theta)=P(y \mid \alpha_1,\beta_1) \to 边际分布 = \int_0^1 p(p',y \mid \alpha_1,\beta_1)dp' \tag{2}$$
+
+对于$p(p',y \mid \alpha_1,\beta_1)$有
+
+$$
+\begin{aligned}
+&\quad p(p',y \mid \alpha_1,\beta_1) \\
+&= p(p' \mid \alpha_1,\beta_1)p(y \mid p') \\
+&= Beta(\alpha_1,\beta_1)\times Binomial(k;n,p') \\
+&= \frac {B(\alpha_1 + k, beta_1 + n -k)}{B(\alpha_1,\beta_1)}\left(\begin{matrix}n \\ k\end{matrix}\right) \frac{1}{B(\alpha_1 + k, beta_1 + n -k)}p'^{\alpha_1+k-1}(1-p')^{\beta_1+n-k-1}
+\end{aligned} \tag{3}
+$$
+
+记
+
+$$h(y \mid \alpha_1,\beta_1)=\frac {B(\alpha_1 + k, beta_1 + n -k)}{B(\alpha_1,\beta_1)}\left(\begin{matrix}n \\ k\end{matrix}\right) \tag{4}$$
+
+$h(y \mid \alpha_1,\beta_1)$与$p'$无关
+
+记
+
+$$g(p',y \mid \alpha_1,\beta_1)=\frac{1}{B(\alpha_1 + k, beta_1 + n -k)}p'^{\alpha_1+k-1}(1-p')^{\beta_1+n-k-1} \tag{5}$$
+
+$g(p',y \mid \alpha_1,\beta_1)$其实就是形状参数为$\alpha_1+k$和$\beta_1+n-k$的Beta分布
+
+则
+
+$$p(p',y \mid \alpha_1,\beta_1)=h(y \mid \alpha_1,\beta_1)g(p',y \mid \alpha_1,\beta_1) \tag{6}$$
+
+则
+
+$$
+\begin{aligned}
+&\quad P(y \mid \alpha_1,\beta_1) \\
+&= \int_0^1 p(p',y \mid \alpha_1,\beta_1)dp' \\
+&= \int_0^1 h(y \mid \alpha_1,\beta_1)g(p',y \mid \alpha_1,\beta_1) dp' \\
+h(.)与p'无关 \to &= h(y \mid \alpha_1,\beta_1) \int_0^1 g(p',y \mid \alpha_1,\beta_1) dp' \\
+g(.)是Beta分布，定义域内积分为1\to &= h(y \mid \alpha_1,\beta_1)
+\end{aligned} \tag{7}
+$$
+
+因此
+
+$$P(y \mid z=B,\theta)=h(y \mid \alpha_1,\beta_1) \tag{8}$$
+
+$$P(y \mid z=C,\theta)=h(y \mid \alpha_2,\beta_2) \tag{9}$$
+
+将(8)和(9)代入(1)中，可得
+
+$$P(y \mid \theta)=\pi h(y \mid \alpha_1,\beta_1) + (1-\pi)h(y \mid \alpha_2,\beta_2) \tag{10}$$
+
+则对于m轮试验得到的$Y=\{y_1,y_2,y_3,...,y_m\}=\{(k_1,n_1),(k_2,n_2),...,(k_m,n_m)\}$，其出现的概率为：
+
+$$P(Y \mid \theta)=\sum_Z P(Y,Z \mid \theta)=\sum_Z P(Z \mid \theta)P(Y \mid Z,\theta)$$
+
+由于每一次试验都是相互独立的，所以
+
+$$P(Y \mid \theta)=\prod_{i=1}^n P(y_i \mid \theta)=\prod_{i=1}^n \left[ \pi h(y_i \mid \alpha_1,\beta_1) + (1-\pi)h(y_i \mid \alpha_2,\beta_2)\right]$$
+
+其对数似然为：
+
+$$L(\theta)=\log P(Y \mid \theta)=\sum_{i=1}^m \log \left[ \pi h(y_i \mid \alpha_1,\beta_1) + (1-\pi)h(y_i \mid \alpha_2,\beta_2)\right]$$
+
+则我们的优化目标为极大对数似然，即
+
+$$\theta^* = \arg_\theta \max L(\theta)$$
+
+<a name="modified-3-coin-problem-3"><h4>3.2.3. 不含隐变量的情况 [<sup>目录</sup>](#content)</h4></a>
+
+即知道每一轮最后投币的硬币来源
+
+若不含有隐变量，即知道每一轮最后投币的硬币来源，则给出的试验观测结果为：
+
+$$Y=\{(y_1,c_1),(y_2,c_2),(y_3,c_3),...,(y_m,c_m)\}=\{(k_1,n_1,c_1),(k_2,n_2,c_2),...,(k_m,n_m,c_m)\}$$
+
+其中，$c_i \in \{0, 1\}$，1表示来自B，0表示来自C
+
+那么，可以直接估计A硬币正面朝上的概率：
+
+$$\pi = \frac{\sum_{i=1}^m I(c_i==1)}{m} \tag{1}$$
+
+其中$I(·)$是指示函数，或者也称为布尔函数
+
+剩下的问题是：怎么估计$\alpha_1,\beta_1$和$\alpha_2,\beta_2$ ？
+
+根据上节的分析，我们已经知道了对于第i轮试验，有：
+
+$$P(y \mid c_i=1)=h(y \mid \alpha_1,\beta_1) \tag{2}$$
+
+$$P(y \mid c_i=0)=h(y \mid \alpha_2,\beta_2) \tag{3}$$
+
+则
+
+$$
+\begin{aligned}
+&\quad P(Y\mid \theta) \\
+&= \prod_{i=1}^m P(y_i,c_i \mid \theta) \\
+&= \prod_{i=1}^m \left[ \pi^{c_i}h(y_i \mid \alpha_1,\beta_1) + (1-\pi)^{1-c_i}h(y_i \mid \alpha_2,\beta_2)\right]
+\end{aligned}
+$$
+
+比较上一节含有隐变量时的情况：
+
+> $$P(Y \mid \theta)=\prod_{i=1}^m P(y_i \mid \theta)=\prod_{i=1}^m \left[ \pi h(y_i \mid \alpha_1,\beta_1) + (1-\pi)h(y_i \mid \alpha_2,\beta_2)\right]$$
+>
+> 可以看出它与上面公式的差别，仅在于是否有与$c_i$相关指数
+
+其对数似然为：
+
+$$
+\begin{aligned}
+&\quad L(\alpha_1,\beta_1,\alpha_2,\beta_2) \\
+&= \log P(Y \mid \theta) \\
+&= \log \prod_{i=1}^m \left[ \pi^{c_i}h(y_i \mid \alpha_1,\beta_1) + (1-\pi)^{1-c_i}h(y_i \mid \alpha_2,\beta_2)\right] \\
+&= \sum_{i=1}^m \log \left[ \pi^{c_i}h(y_i \mid \alpha_1,\beta_1) + (1-\pi)^{1-c_i}h(y_i \mid \alpha_2,\beta_2)\right]
+\end{aligned}
+$$
+
+则我们的目标为极大化对数似然，即
+
+$$\{\alpha_1^*,\beta_1^*,\alpha_2^*,\beta_2^*\}=\arg_{\alpha_1,\beta_1,\alpha_2,\beta_2} \max L(\alpha_1,\beta_1,\alpha_2,\beta_2)$$
+
+<a name="compare-between-2-optimize-methods"><h4>3.2.4. 对不含隐藏变量情况的优化目标的改进 [<sup>目录</sup>](#content)</h4></a>
+
+可以根据Y中每轮试验的$c_i$，将观测结果分成两个子集：
+
+$$Y_1=\{(y_i,c_i)\mid c_i=1,i=1,2,...,m\}, 其中 |Y_1|=N_1$$
+
+$$Y_0=\{(y_i,c_i)\mid c_i=0,i=1,2,...,m\}，其中 |Y_0|=N_0$$
+
+则在子集Y1上它的似然为：
+
+$$P(Y_1 \mid \theta) = \prod_{c_i=1}P(y_i, c_i \mid \theta)$$
+
+在子集Y0上它的似然为：
+
+$$P(Y_0 \mid \theta) = \prod_{c_i=0}P(y_i, c_i \mid \theta)$$
+
+则它们对应的对数似然为：
+
+$$
+\begin{cases}
+L(\alpha_1,\beta_1)=\log \prod_{c_i=1}P(y_i, c_i \mid \theta) = \sum_{c_i=1}\left( \log \pi + \log h(y_i\mid \alpha_1,\beta_1)\right)=N_1 \log \pi + \sum_{c_i=1} \log h(y_i\mid \alpha_1,\beta_1) \\
+L(\alpha_2,\beta_2)=\log \prod_{c_i=0}P(y_i, c_i \mid \theta) = \sum_{c_i=0}\left( \log (1-\pi) + \log h(y_i\mid \alpha_2,\beta_2)\right)=N_0 \log (1-\pi) + \sum_{c_i=0} \log h(y_i\mid \alpha_2,\beta_2)
+\end{cases}
+$$
+
+分别对它们极大对数似然估计：
+
+$$
+\begin{cases}
+\{\alpha_1^*,\beta_1^*\} = \arg \max L(\alpha_1,\beta_1) \\
+\{\alpha_2^*,\beta_2^*\} = \arg \max L(\alpha_2,\beta_2) \\
+\end{cases}
+$$
+
+问题：
+
+> 这样拆分开。分别进行极大似然估计，与前面提到的放在一起最为整体，执行极大似然估计，有什么不同？
+>
+> 或者，换一种方式问：
+>
+> 在当前情况下，整体的极大似然估计，可以拆解为子集各自的极大似然估计吗？它们是一回事吗？
+
+答：整体和分开，本质上是一样的，即
+
+$$
+\max L(\alpha_1,\beta_1,\alpha_2,\beta_2) \\
+|| \\
+【\max L(\alpha_1,\beta_1)】 + 【\max L(\alpha_2,\beta_2)】
+$$
+
+证明：
+
+> $$\begin{aligned}&\quad L(\alpha_1,\beta_1,\alpha_2,\beta_2) \\ &= \sum_{i=1}^m \log \left[ \pi^{c_i}h(y_i \mid \alpha_1,\beta_1) + (1-\pi)^{1-c_i}h(y_i \mid \alpha_2,\beta_2)\right] \\ &= \sum_{c_i=1} \log \left[\pi^{c_i}h(y_i \mid \alpha_1,\beta_1)\right] + \sum_{c_i=0} \log \left[(1-\pi)^{1-c_i}h(y_i \mid \alpha_2,\beta_2)\right] \\ &= \sum_{c_i=1} \log \left[\pi h(y_i \mid \alpha_1,\beta_1)\right] + \sum_{c_i=0} \log \left[(1-\pi)h(y_i \mid \alpha_2,\beta_2)\right] \\ &= L(\alpha_1,\beta_1) + L(\alpha_2,\beta_2)\end{aligned}$$
+>
+> 因此：
+>
+> $$\max L(\alpha_1,\beta_1,\alpha_2,\beta_2) = \max (L(\alpha_1,\beta_1) + L(\alpha_2,\beta_2))$$
+>
+> 由于$L(\alpha_1,\beta_1)$ 与$L(\alpha_2,\beta_2)$相互独立，所以
+>
+> $$\max L(\alpha_1,\beta_1,\alpha_2,\beta_2) = \max L(\alpha_1,\beta_1) + \max L(\alpha_2,\beta_2)$$
+
+由上面的分析讨论，我们知道，可以将优化目标改为：
+
+$$
+\begin{cases}
+\max L(\alpha_1,\beta_1) = \max N_1\log \pi + \sum_{c_i=1} h(y_i \mid \alpha_1,\beta_1) \\
+\max L(\alpha_2,\beta_2) = \max N_0\log (1-\pi) + \sum_{c_i=0} h(y_i \mid \alpha_2,\beta_2)
+\end{cases}
+$$
+
+由于上面的$N_1\log \pi$和$N_0\log (1-\pi)$都是常数，不影响优化目标，所以上面的优化目标可以简化为：
+
+$$
+\begin{cases}
+\max L(\alpha_1,\beta_1) = \max \sum_{c_i=1} h(y_i \mid \alpha_1,\beta_1) \\
+\max L(\alpha_2,\beta_2) = \max \sum_{c_i=0} h(y_i \mid \alpha_2,\beta_2)
+\end{cases}
+$$
+
+<a name="methods-to-evaluate-model"><h2>4. 模型的评估方法 [<sup>目录</sup>](#content)</h2></a>
+
+<a name="what-a-good-model-is"><h3>4.1. 什么叫一个“好”的模型: 泛化误差尽可能低 [<sup>目录</sup>](#content)</h3></a>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-Model-Evaluation-01.jpg width=800 /></p>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-Model-Evaluation-02_1.jpg width=800 /></p>
+
+<a name="how-to-get-general-error"><h3>4.2. 如何得到泛化误差：用“测试误差”近似“泛化误差” [<sup>目录</sup>](#content)</h3></a>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-Model-Evaluation-02_2.jpg width=800 /></p>
+
+<a name="hold-out-method"><h4>4.2.1. 留出法及其存在的问题 [<sup>目录</sup>](#content)</h4></a>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-Model-Evaluation-03_1.jpg width=800 /></p>
+
+<a name="k-fold-cross-validation"><h4>4.2.2. 改进方案一：K折交叉验证及其特例——留一法 [<sup>目录</sup>](#content)</h4></a>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-Model-Evaluation-03_2.jpg width=800 /></p>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-Model-Evaluation-04_1.jpg width=800 /></p>
+
+<a name="bootstrap"><h4>4.2.3. 改进方案二：自助法（bootstrap） [<sup>目录</sup>](#content)</h4></a>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-Model-Evaluation-04_2.jpg width=800 /></p>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-Model-Evaluation-05_1.jpg width=800 /></p>
+
+<a name="how-to-quantify-general-error"><h3>4.3. 如何定量计算和评估泛化误差 [<sup>目录</sup>](#content)</h3></a>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-Model-Evaluation-05_2.jpg width=800 /></p>
+
+<a name="correct-or-error-rate"><h4>4.3.1. 最简单的标准：正确率/错误率——正确率一定越高越好？ [<sup>目录</sup>](#content)</h4></a>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-Model-Evaluation-05_3.jpg width=800 /></p>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-Model-Evaluation-06.jpg width=800 /></p>
+
+<a name="precise-recall-and-f1"><h4>4.3.2. 更全面的标准：查全率、查准率和F1 [<sup>目录</sup>](#content)</h4></a>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-Model-Evaluation-07.jpg width=800 /></p>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-Model-Evaluation-08.jpg width=800 /></p>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-Model-Evaluation-09.jpg width=800 /></p>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-Model-Evaluation-10.jpg width=800 /></p>
+
+<a name="roc-and-auc"><h4>4.3.3. ROC与AUC [<sup>目录</sup>](#content)</h4></a>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-Model-Evaluation-11.jpg width=800 /></p>
+
+<a name="compare-roc-and-p-r-curve"><h4>4.3.4. 比较ROC与P-R曲线 [<sup>目录</sup>](#content)</h4></a>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-Model-Evaluation-12.jpg width=800 /></p>
+
+<p align="center"><img src=./picture/Understand-MachineLearning-Model-Evaluation-13.jpg width=800 /></p>
+
+
+
+
+
 
 <a name="supplimentary"><h2>补充知识 [<sup>目录</sup>](#content)</h2></a>
 
