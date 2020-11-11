@@ -115,7 +115,7 @@ EM算法是用于求解极大似然估计的一种迭代逼近的算法
 $$
 \theta^*=
 \begin{cases}
-arg \max_Y P(O \mid \theta) , &  if \quad O \subseteq U \\
+arg \max_Y P(O \mid \theta) , &  if \quad O \subseteq U \newline
 arg \max_Y \sum_I P(O,I\mid \theta), & if \quad O\subsetneq U
 \end{cases}
 $$
@@ -168,8 +168,8 @@ $$
 
     $$
     \begin{aligned}
-    &\max_w \log\prod_{i=1}^m P(y_i \mid x_i) \\
-    &= \log\prod_{i=1}^m P(y_i=1 \mid x_i)^{y_i}P(y_i=0 \mid x_i)^{1-y_i} \\
+    &\max_w \log\prod_{i=1}^m P(y_i \mid x_i) \newline
+    &= \log\prod_{i=1}^m P(y_i=1 \mid x_i)^{y_i}P(y_i=0 \mid x_i)^{1-y_i} \newline
     &= \sum_{i=1}^m y_i\log P(y_i=1 \mid x_i)+(1-y_i)\log(1-P(y_i=1 \mid x_i))
     \end{aligned}
     $$
@@ -177,7 +177,7 @@ $$
     其中，
 
     $$
-    h(x)=P(y=1\mid x)=\frac{1}{1+e^{wx}}\\
+    h(x)=P(y=1\mid x)=\frac{1}{1+e^{wx}}\newline
     P(y=0\mid x)=1-P(y=1\mid x)=\frac{e^{wx}}{1+e^{wx}}
     $$
 
@@ -214,21 +214,21 @@ $$
     则，完整的优化目标可以写成：
 
     $$
-    \max_W \frac{\hat r}{||W||} \\
+    \max_W \frac{\hat r}{||W||} \newline
     s.t. \quad y_i(W^Tx_i)\ge \hat r \quad i=1,2,...,m
     $$
 
     为了简化优化目标，我们限定$\hat r=1$，则完整的优化目标可以写成：
 
     $$
-    \max_W \frac{1}{||W||} \\
+    \max_W \frac{1}{||W||} \newline
     s.t. \quad y_i(W^Tx_i)\ge 1 \quad i=1,2,...,m
     $$
 
     而我们习惯将优化目标写成最小化形式，所以，可以进一步改写成：
 
     $$
-    \min_W \frac 12 ||W|| \\
+    \min_W \frac 12 ||W|| \newline
     s.t. \quad 1-y_i(W^Tx_i)\le 0 \quad i=1,2,...,m
     $$
 
@@ -236,8 +236,8 @@ $$
 
     对于给定的训练集$T=\{(x_1,y_1),(x_2,y_2),...,(x_N,y_N)\}$以及特征函数$f_i(x,y),\, i=1,2,...,n$，最大熵模型的学习等价于约束最优化问题：
 
-    $$\max_{P\in C} H(P)=-\sum_{x,y} \hat P(x)P(y\mid x)\log P(y \mid x) \\
-    s.t. \quad E_P(f_i)=E_{\hat P}(f_i), \, i=1,2,...,n \\
+    $$\max_{P\in C} H(P)=-\sum_{x,y} \hat P(x)P(y\mid x)\log P(y \mid x) \newline
+    s.t. \quad E_P(f_i)=E_{\hat P}(f_i), \, i=1,2,...,n \newline
     \sum_y P(y \mid x)=1
     $$
 
@@ -302,9 +302,9 @@ $$
     
     $$X=
     \begin{bmatrix}
-    -x_1- \\
-    -x_2- \\
-    ... \\
+    -x_1- \newline
+    -x_2- \newline
+    ... \newline
     -x_m- 
     \end{bmatrix}
     $$
@@ -315,9 +315,9 @@ $$
 
     $$
     \begin{aligned}
-    \Delta_W f(W) &= \frac 12 \Delta_W [XW-Y]^T[XW-Y] \\
-    &= \frac 12 \Delta_W (W^TX^TXW - W^TX^TY - Y^TXW+Y^TY) \\
-    &= \frac 12 \Delta_W tr(W^TX^TXW - W^TX^TY - Y^TXW+Y^TY) \\
+    \Delta_W f(W) &= \frac 12 \Delta_W [XW-Y]^T[XW-Y] \newline
+    &= \frac 12 \Delta_W (W^TX^TXW - W^TX^TY - Y^TXW+Y^TY) \newline
+    &= \frac 12 \Delta_W tr(W^TX^TXW - W^TX^TY - Y^TXW+Y^TY) \newline
     &= \frac 12 \Delta_W tr(WW^TX^TX - Y^TWX - Y^TXW)
     \end{aligned}
     $$
@@ -325,7 +325,7 @@ $$
     而
     
     $$
-    \Delta_W tr(WW^TX^TX)=X^TXWI + X^TXWI \\
+    \Delta_W tr(WW^TX^TX)=X^TXWI + X^TXWI \newline
     \Delta_W tr(Y^TXW)=X^TY
     $$
 
@@ -412,10 +412,10 @@ $$
 
 $$
 \begin{aligned}
-&\quad P(y \mid \theta) \\
-&=\sum_z P(y,z \mid \theta) \\
-&=\sum_z P(z\mid \theta)P(y \mid z, \theta) \\
-&=P(z=B \mid \theta)P(y \mid z=B,\theta) + P(z=C \mid \theta)P(y \mid z=C,\theta) \\
+&\quad P(y \mid \theta) \newline
+&=\sum_z P(y,z \mid \theta) \newline
+&=\sum_z P(z\mid \theta)P(y \mid z, \theta) \newline
+&=P(z=B \mid \theta)P(y \mid z=B,\theta) + P(z=C \mid \theta)P(y \mid z=C,\theta) \newline
 &=\pi p^y (1-p)^{1-y} + (1-\pi)q^y(1-q)^{1-y}
 \end{aligned}
 $$
@@ -466,9 +466,9 @@ $$Y=\{(k_1,n_1), (k_2,n_2), ..., (k_m,n_m)\}$$
 
 $$
 \begin{aligned}
-&\quad P(y \mid \theta) \\
-&= \sum_z P(y,z \mid \theta) \\
-&= \sum_z P(z \mid \theta)P(y \mid z,\theta) \\
+&\quad P(y \mid \theta) \newline
+&= \sum_z P(y,z \mid \theta) \newline
+&= \sum_z P(z \mid \theta)P(y \mid z,\theta) \newline
 &= P(z=B \mid \theta)P(y \mid z=B,\theta) + P(z=C \mid \theta)P(y \mid z=C,\theta)
 \end{aligned} \tag{1}
 $$
@@ -481,9 +481,9 @@ $$P(y \mid z=B, \theta)=P(y \mid \alpha_1,\beta_1) \to 边际分布 = \int_0^1 p
 
 $$
 \begin{aligned}
-&\quad p(p',y \mid \alpha_1,\beta_1) \\
-&= p(p' \mid \alpha_1,\beta_1)p(y \mid p') \\
-&= Beta(\alpha_1,\beta_1)\times Binomial(k;n,p') \\
+&\quad p(p',y \mid \alpha_1,\beta_1) \newline
+&= p(p' \mid \alpha_1,\beta_1)p(y \mid p') \newline
+&= Beta(\alpha_1,\beta_1)\times Binomial(k;n,p') \newline
 &= \frac {B(\alpha_1 + k, beta_1 + n -k)}{B(\alpha_1,\beta_1)}\left(\begin{matrix}n \\ k\end{matrix}\right) \frac{1}{B(\alpha_1 + k, beta_1 + n -k)}p'^{\alpha_1+k-1}(1-p')^{\beta_1+n-k-1}
 \end{aligned} \tag{3}
 $$
@@ -508,10 +508,10 @@ $$p(p',y \mid \alpha_1,\beta_1)=h(y \mid \alpha_1,\beta_1)g(p',y \mid \alpha_1,\
 
 $$
 \begin{aligned}
-&\quad P(y \mid \alpha_1,\beta_1) \\
-&= \int_0^1 p(p',y \mid \alpha_1,\beta_1)dp' \\
-&= \int_0^1 h(y \mid \alpha_1,\beta_1)g(p',y \mid \alpha_1,\beta_1) dp' \\
-h(.)与p'无关 \to &= h(y \mid \alpha_1,\beta_1) \int_0^1 g(p',y \mid \alpha_1,\beta_1) dp' \\
+&\quad P(y \mid \alpha_1,\beta_1) \newline
+&= \int_0^1 p(p',y \mid \alpha_1,\beta_1)dp' \newline
+&= \int_0^1 h(y \mid \alpha_1,\beta_1)g(p',y \mid \alpha_1,\beta_1) dp' \newline
+h(.)与p'无关 \to &= h(y \mid \alpha_1,\beta_1) \int_0^1 g(p',y \mid \alpha_1,\beta_1) dp' \newline
 g(.)是Beta分布，定义域内积分为1\to &= h(y \mid \alpha_1,\beta_1)
 \end{aligned} \tag{7}
 $$
@@ -570,8 +570,8 @@ $$P(y \mid c_i=0)=h(y \mid \alpha_2,\beta_2) \tag{3}$$
 
 $$
 \begin{aligned}
-&\quad P(Y\mid \theta) \\
-&= \prod_{i=1}^m P(y_i,c_i \mid \theta) \\
+&\quad P(Y\mid \theta) \newline
+&= \prod_{i=1}^m P(y_i,c_i \mid \theta) \newline
 &= \prod_{i=1}^m \left[ \pi^{c_i}h(y_i \mid \alpha_1,\beta_1) + (1-\pi)^{1-c_i}h(y_i \mid \alpha_2,\beta_2)\right]
 \end{aligned}
 $$
@@ -586,9 +586,9 @@ $$
 
 $$
 \begin{aligned}
-&\quad L(\alpha_1,\beta_1,\alpha_2,\beta_2) \\
-&= \log P(Y \mid \theta) \\
-&= \log \prod_{i=1}^m \left[ \pi^{c_i}h(y_i \mid \alpha_1,\beta_1) + (1-\pi)^{1-c_i}h(y_i \mid \alpha_2,\beta_2)\right] \\
+&\quad L(\alpha_1,\beta_1,\alpha_2,\beta_2) \newline
+&= \log P(Y \mid \theta) \newline
+&= \log \prod_{i=1}^m \left[ \pi^{c_i}h(y_i \mid \alpha_1,\beta_1) + (1-\pi)^{1-c_i}h(y_i \mid \alpha_2,\beta_2)\right] \newline
 &= \sum_{i=1}^m \log \left[ \pi^{c_i}h(y_i \mid \alpha_1,\beta_1) + (1-\pi)^{1-c_i}h(y_i \mid \alpha_2,\beta_2)\right]
 \end{aligned}
 $$
@@ -617,7 +617,7 @@ $$P(Y_0 \mid \theta) = \prod_{c_i=0}P(y_i, c_i \mid \theta)$$
 
 $$
 \begin{cases}
-L(\alpha_1,\beta_1)=\log \prod_{c_i=1}P(y_i, c_i \mid \theta) = \sum_{c_i=1}\left( \log \pi + \log h(y_i\mid \alpha_1,\beta_1)\right)=N_1 \log \pi + \sum_{c_i=1} \log h(y_i\mid \alpha_1,\beta_1) \\
+L(\alpha_1,\beta_1)=\log \prod_{c_i=1}P(y_i, c_i \mid \theta) = \sum_{c_i=1}\left( \log \pi + \log h(y_i\mid \alpha_1,\beta_1)\right)=N_1 \log \pi + \sum_{c_i=1} \log h(y_i\mid \alpha_1,\beta_1) \newline
 L(\alpha_2,\beta_2)=\log \prod_{c_i=0}P(y_i, c_i \mid \theta) = \sum_{c_i=0}\left( \log (1-\pi) + \log h(y_i\mid \alpha_2,\beta_2)\right)=N_0 \log (1-\pi) + \sum_{c_i=0} \log h(y_i\mid \alpha_2,\beta_2)
 \end{cases}
 $$
@@ -626,8 +626,8 @@ $$
 
 $$
 \begin{cases}
-\{\alpha_1^*,\beta_1^*\} = \arg \max L(\alpha_1,\beta_1) \\
-\{\alpha_2^*,\beta_2^*\} = \arg \max L(\alpha_2,\beta_2) \\
+\{\alpha_1^*,\beta_1^*\} = \arg \max L(\alpha_1,\beta_1) \newline
+\{\alpha_2^*,\beta_2^*\} = \arg \max L(\alpha_2,\beta_2) \newline
 \end{cases}
 $$
 
@@ -642,7 +642,7 @@ $$
 答：整体和分开，本质上是一样的，即
 
 $$
-\max L(\alpha_1,\beta_1,\alpha_2,\beta_2) \\
+\max L(\alpha_1,\beta_1,\alpha_2,\beta_2) \newline
 || \\
 【\max L(\alpha_1,\beta_1)】 + 【\max L(\alpha_2,\beta_2)】
 $$
@@ -663,7 +663,7 @@ $$
 
 $$
 \begin{cases}
-\max L(\alpha_1,\beta_1) = \max N_1\log \pi + \sum_{c_i=1} h(y_i \mid \alpha_1,\beta_1) \\
+\max L(\alpha_1,\beta_1) = \max N_1\log \pi + \sum_{c_i=1} h(y_i \mid \alpha_1,\beta_1) \newline
 \max L(\alpha_2,\beta_2) = \max N_0\log (1-\pi) + \sum_{c_i=0} h(y_i \mid \alpha_2,\beta_2)
 \end{cases}
 $$
@@ -672,7 +672,7 @@ $$
 
 $$
 \begin{cases}
-\max L(\alpha_1,\beta_1) = \max \sum_{c_i=1} h(y_i \mid \alpha_1,\beta_1) \\
+\max L(\alpha_1,\beta_1) = \max \sum_{c_i=1} h(y_i \mid \alpha_1,\beta_1) \newline
 \max L(\alpha_2,\beta_2) = \max \sum_{c_i=0} h(y_i \mid \alpha_2,\beta_2)
 \end{cases}
 $$
