@@ -595,7 +595,7 @@ $$
 
 则我们的目标为极大化对数似然，即
 
-$$\{\alpha_1^*,\beta_1^*,\alpha_2^*,\beta_2^*\}=\arg_{\alpha_1,\beta_1,\alpha_2,\beta_2} \max L(\alpha_1,\beta_1,\alpha_2,\beta_2)$$
+$$\lbrace\alpha_1^{\ast},\beta_1^{\ast},\alpha_2^{\ast},\beta_2^{\ast}\rbrace=\arg_{\alpha_1,\beta_1,\alpha_2,\beta_2} \max L(\alpha_1,\beta_1,\alpha_2,\beta_2)$$
 
 <a name="compare-between-2-optimize-methods"><h4>3.2.4. 对不含隐藏变量情况的优化目标的改进 [<sup>目录</sup>](#content)</h4></a>
 
