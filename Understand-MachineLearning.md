@@ -255,7 +255,7 @@ $$
 
 > 对于以下一般形式的带约束的优化问题（即有等式约束，又有不等式约束）
 >
-> $$\min_w f(w) \\ s.t. \quad g_i(w) \le 0, \, i=1,2,...,k \\ h_i(w)=0, \, i=1,2,...,l$$
+> $$\min_w f(w) \newline s.t. \quad g_i(w) \le 0, \, i=1,2,...,k \newline h_i(w)=0, \, i=1,2,...,l$$
 >
 > 引入拉格朗日乘子$\alpha_1,\alpha_2,...,\alpha_k,\beta_1,\beta_2,...,\beta_l$，定义拉格朗日函数$L(w,\alpha,\beta)$：
 >
@@ -490,7 +490,7 @@ $$
 
 记
 
-$$h(y \mid \alpha_1,\beta_1)=\frac {B(\alpha_1 + k, beta_1 + n -k)}{B(\alpha_1,\beta_1)}\left(\begin{matrix}n \\ k\end{matrix}\right) \tag{4}$$
+$$h(y \mid \alpha_1,\beta_1)=\frac {B(\alpha_1 + k, beta_1 + n -k)}{B(\alpha_1,\beta_1)}\left(\begin{matrix}n \newline k\end{matrix}\right) \tag{4}$$
 
 $h(y \mid \alpha_1,\beta_1)$与$p'$无关
 
@@ -548,7 +548,7 @@ $$\theta^* = \arg_\theta \max L(\theta)$$
 
 若不含有隐变量，即知道每一轮最后投币的硬币来源，则给出的试验观测结果为：
 
-$$Y=\{(y_1,c_1),(y_2,c_2),(y_3,c_3),...,(y_m,c_m)\}=\{(k_1,n_1,c_1),(k_2,n_2,c_2),...,(k_m,n_m,c_m)\}$$
+$$Y=\lbrace(y_1,c_1),(y_2,c_2),(y_3,c_3),...,(y_m,c_m)\}=\{(k_1,n_1,c_1),(k_2,n_2,c_2),...,(k_m,n_m,c_m)\rbrace$$
 
 其中，$c_i \in \{0, 1\}$，1表示来自B，0表示来自C
 
@@ -643,13 +643,13 @@ $$
 
 $$
 \max L(\alpha_1,\beta_1,\alpha_2,\beta_2) \newline
-|| \\
+|| \newline
 【\max L(\alpha_1,\beta_1)】 + 【\max L(\alpha_2,\beta_2)】
 $$
 
 证明：
 
-> $$\begin{aligned}&\quad L(\alpha_1,\beta_1,\alpha_2,\beta_2) \\ &= \sum_{i=1}^m \log \left[ \pi^{c_i}h(y_i \mid \alpha_1,\beta_1) + (1-\pi)^{1-c_i}h(y_i \mid \alpha_2,\beta_2)\right] \\ &= \sum_{c_i=1} \log \left[\pi^{c_i}h(y_i \mid \alpha_1,\beta_1)\right] + \sum_{c_i=0} \log \left[(1-\pi)^{1-c_i}h(y_i \mid \alpha_2,\beta_2)\right] \\ &= \sum_{c_i=1} \log \left[\pi h(y_i \mid \alpha_1,\beta_1)\right] + \sum_{c_i=0} \log \left[(1-\pi)h(y_i \mid \alpha_2,\beta_2)\right] \\ &= L(\alpha_1,\beta_1) + L(\alpha_2,\beta_2)\end{aligned}$$
+> $$\begin{aligned}&\quad L(\alpha_1,\beta_1,\alpha_2,\beta_2) \newline &= \sum_{i=1}^m \log \left[ \pi^{c_i}h(y_i \mid \alpha_1,\beta_1) + (1-\pi)^{1-c_i}h(y_i \mid \alpha_2,\beta_2)\right] \newline &= \sum_{c_i=1} \log \left[\pi^{c_i}h(y_i \mid \alpha_1,\beta_1)\right] + \sum_{c_i=0} \log \left[(1-\pi)^{1-c_i}h(y_i \mid \alpha_2,\beta_2)\right] \newline &= \sum_{c_i=1} \log \left[\pi h(y_i \mid \alpha_1,\beta_1)\right] + \sum_{c_i=0} \log \left[(1-\pi)h(y_i \mid \alpha_2,\beta_2)\right] \newline &= L(\alpha_1,\beta_1) + L(\alpha_2,\beta_2)\end{aligned}$$
 >
 > 因此：
 >
