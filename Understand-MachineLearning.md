@@ -68,7 +68,7 @@ EM算法是用于求解极大似然估计的一种迭代逼近的算法
 >
 > 则基于概率模型的机器任务可以形式化地表示为
 >
-> $$Y^*=arg \max_Y P(Y \mid O,\theta)$$
+> $$Y^{\ast}=arg \max_Y P(Y \mid O,\theta)$$
 >
 > 即，对于已经训练好的模型$\theta$，给定一组观测值O，且已知感兴趣的未知变量Y的可能取值范围，计算出所以可能的$P(Y \mid O,\theta)$，那个概率最大的Y就是模型给出的判断
 
@@ -84,7 +84,7 @@ EM算法是用于求解极大似然估计的一种迭代逼近的算法
 >
 > 所以极大似然估计是概率模型的一种优化方法，可以表示为
 >
-> $$\theta^*=arg \max_{\theta}P(O \mid \theta)$$
+> $$\theta^{\ast}=arg \max_{\theta}P(O \mid \theta)$$
 
 前面已经提到了，在概率模型中，有时既含有可观测变量 (observable variable) O，又含有隐藏变量或潜在变量(latent variable) I
 
@@ -94,7 +94,7 @@ EM算法是用于求解极大似然估计的一种迭代逼近的算法
 
     则此时，给定数据，可以直接用极大似然估计法来估计模型参数
 
-    $$\theta^*=arg \max_Y P(O \mid \theta)$$
+    $$\theta^{\ast}=arg \max_Y P(O \mid \theta)$$
 
 - 若含有隐变量
 
@@ -104,7 +104,7 @@ EM算法是用于求解极大似然估计的一种迭代逼近的算法
 
     则此时的优化目标仍然是极大似然估计(MLE)，但是是含有隐变量的极大似然估计，即
 
-    $$\theta^*=arg \max_Y P(O \mid \theta)=arg \max_Y \sum_I P(O,I\mid \theta)$$
+    $$\theta^{\ast}=arg \max_Y P(O \mid \theta)=arg \max_Y \sum_I P(O,I\mid \theta)$$
 
 （2）求解优化目标
 
@@ -113,7 +113,7 @@ EM算法是用于求解极大似然估计的一种迭代逼近的算法
 且对于可观测数据的不同，把极大似然估计分成了两种情况，即观测数据是完全数据$O \subseteq U$的情况，和观测数据是不完全数据$O\subsetneq U$的情况
 
 $$
-\theta^*=
+\theta^{\ast}=
 \begin{cases}
 arg \max_Y P(O \mid \theta) , &  if \quad O \subseteq U \newline
 arg \max_Y \sum_I P(O,I\mid \theta), & if \quad O\subsetneq U
@@ -234,7 +234,7 @@ $$
 
     （2）最大熵模型的极大化模型的熵
 
-    对于给定的训练集$T=\{(x_1,y_1),(x_2,y_2),...,(x_N,y_N)\}$以及特征函数$f_i(x,y),\, i=1,2,...,n$，最大熵模型的学习等价于约束最优化问题：
+    对于给定的训练集$T=\lbrace(x_1,y_1),(x_2,y_2),...,(x_N,y_N)\rbrace$以及特征函数$f_i(x,y),\, i=1,2,...,n$，最大熵模型的学习等价于约束最优化问题：
 
     $$\max_{P\in C} H(P)=-\sum_{x,y} \hat P(x)P(y\mid x)\log P(y \mid x) \newline
     s.t. \quad E_P(f_i)=E_{\hat P}(f_i), \, i=1,2,...,n \newline
@@ -420,9 +420,9 @@ $$
 \end{aligned}
 $$
 
-其中，$z \in \{正面，反面\}$
+其中，$z \in \lbrace正面，反面\rbrace$
 
-对于n次试验得到的结果$Y=\{y_1, y_2, y_3, ..., y_n\}$，其出现的概率为：
+对于n次试验得到的结果$Y=\lbracey_1, y_2, y_3, ..., y_n\rbrace$，其出现的概率为：
 
 $$P(Y \mid \theta)=\sum_Z P(Y,Z \mid \theta)=\sum_Z P(Z \mid \theta)P(Y \mid Z,\theta)$$
 
@@ -454,9 +454,9 @@ $$L(\theta)=\log P(Y \mid \theta)=\sum_{i=1}^n \log \left[ \pi p^{y_i} (1-p)^{1-
 
 给出m轮试验的结果Y：
 
-$$Y=\{(k_1,n_1), (k_2,n_2), ..., (k_m,n_m)\}$$
+$$Y=\lbrace(k_1,n_1), (k_2,n_2), ..., (k_m,n_m)\rbrace$$
 
-问题：估计$\theta=\{\pi, \alpha_1, \beta_1, \alpha_2, \beta_2\}$
+问题：估计$\theta=\lbrace\pi, \alpha_1, \beta_1, \alpha_2, \beta_2\rbrace$
 
 <a name="modified-3-coin-problem-2"><h4>3.2.2. 含隐变量的情况 [<sup>目录</sup>](#content)</h4></a>
 
@@ -484,7 +484,7 @@ $$
 &\quad p(p',y \mid \alpha_1,\beta_1) \newline
 &= p(p' \mid \alpha_1,\beta_1)p(y \mid p') \newline
 &= Beta(\alpha_1,\beta_1)\times Binomial(k;n,p') \newline
-&= \frac {B(\alpha_1 + k, beta_1 + n -k)}{B(\alpha_1,\beta_1)}\left(\begin{matrix}n \\ k\end{matrix}\right) \frac{1}{B(\alpha_1 + k, beta_1 + n -k)}p'^{\alpha_1+k-1}(1-p')^{\beta_1+n-k-1}
+&= \frac {B(\alpha_1 + k, beta_1 + n -k)}{B(\alpha_1,\beta_1)}\left(\begin{matrix}n \newline k\end{matrix}\right) \frac{1}{B(\alpha_1 + k, beta_1 + n -k)}p'^{\alpha_1+k-1}(1-p')^{\beta_1+n-k-1}
 \end{aligned} \tag{3}
 $$
 
@@ -540,7 +540,7 @@ $$L(\theta)=\log P(Y \mid \theta)=\sum_{i=1}^m \log \left[ \pi h(y_i \mid \alpha
 
 则我们的优化目标为极大对数似然，即
 
-$$\theta^* = \arg_\theta \max L(\theta)$$
+$$\theta^{\ast} = \arg_\theta \max L(\theta)$$
 
 <a name="modified-3-coin-problem-3"><h4>3.2.3. 不含隐变量的情况 [<sup>目录</sup>](#content)</h4></a>
 
@@ -601,9 +601,9 @@ $$\lbrace\alpha_1^{\ast},\beta_1^{\ast},\alpha_2^{\ast},\beta_2^{\ast}\rbrace=\a
 
 可以根据Y中每轮试验的$c_i$，将观测结果分成两个子集：
 
-$$Y_1=\{(y_i,c_i)\mid c_i=1,i=1,2,...,m\}, 其中 |Y_1|=N_1$$
+$$Y_1=\lbrace(y_i,c_i)\mid c_i=1,i=1,2,...,m\rbrace, 其中 |Y_1|=N_1$$
 
-$$Y_0=\{(y_i,c_i)\mid c_i=0,i=1,2,...,m\}，其中 |Y_0|=N_0$$
+$$Y_0=\lbrace(y_i,c_i)\mid c_i=0,i=1,2,...,m\rbrace，其中 |Y_0|=N_0$$
 
 则在子集Y1上它的似然为：
 
@@ -626,8 +626,8 @@ $$
 
 $$
 \begin{cases}
-\{\alpha_1^*,\beta_1^*\} = \arg \max L(\alpha_1,\beta_1) \newline
-\{\alpha_2^*,\beta_2^*\} = \arg \max L(\alpha_2,\beta_2) \newline
+\lbrace\alpha_1^{\ast},\beta_1^{\ast}\rbrace = \arg \max L(\alpha_1,\beta_1) \newline
+\lbrace\alpha_2^{\ast},\beta_2^{\ast}\rbrace = \arg \max L(\alpha_2,\beta_2) \newline
 \end{cases}
 $$
 
